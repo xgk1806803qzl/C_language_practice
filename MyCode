@@ -1,0 +1,99 @@
+________________________________________________________________________________________________________
+练习人：漆兆龙       |成绩：80                |批改人：漆兆龙       |修订成绩：88          |时间：2                  |
+________________________________________________________________________________________________________
+题目与代码：
+p1047
+#include <cstdio>
+
+int main()
+{
+    int n, m, a[10001] = {0}, count = 0;
+    scanf("%d%d", &n, &m);
+    while (m--) {
+        int c, b;
+        scanf("%d%d", &c, &b);
+        for (; c <= b; c++)
+            a[c] = 1;
+    }
+    for (int i = 0; i <= n; i++)
+        if (a[i] == 0) count++;
+    printf("%d", count);
+    return 0;
+}
+
+p1055
+#include <cstdio>
+
+int main()
+{
+    int sum = 0, i, j = 1;
+    char str[12] = "0123456789X", a[14];
+    gets(a);
+    for (i = 0; i < 13; i++) {
+        if (a[i] == '-') continue;
+        else sum += (a[i] - 48) * j++;
+    }
+    if (str[sum % 11] == a[12]) printf("Right");
+    else {a[12] = str[sum % 11]; puts(a);}
+    return 0;
+}
+
+p1085
+#include <cstdio>
+using namespace std;
+
+int main()
+{
+    int a, b, sum[9] = {8}, day = 0;
+    for (int i = 1; i < 8; i++) {
+        scanf("%d%d\n", &a, &b);
+        sum[i] = a + b;
+        if (sum[i] > sum[day]) day = i;
+    }
+    if (day == 0) putchar(48);
+    else printf("%d", day);
+    return 0;
+}
+
+p1089
+#include<iostream>
+using namespace std;
+int money,cost,mama,flag=1,monthofdeath;
+int main ()
+{
+    for(int i=1;i<=12;i++) {
+        money+=300;  
+        cin>>cost;     
+        money-=cost;    
+           if(money<0) {     
+              flag=0;       
+              monthofdeath=i;    
+              break;            
+           }
+        mama+=money/100;     
+        money%=100;                  
+    }    
+    if(flag==1) {
+        money+=mama*120;    
+        cout<<money;
+    }            
+    else
+        cout<<-monthofdeath;
+    return 0;
+}
+
+p1200
+#include <cstdio>
+
+int main()
+{
+    int n, m, star = 1, team = 1;
+    while ((n = getchar()) != '\n')
+        star *= (n - 64);
+    while ((n = getchar()) != '\n')
+        team *= (n - 64);
+    if (star % 47 == team % 47)
+        printf("GO");
+    else printf("STAY");
+    return 0;
+}
