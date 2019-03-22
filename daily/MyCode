@@ -1,0 +1,142 @@
+________________________________________________________________________________________________________
+练习人：漆兆龙       |成绩：70               |批改人：漆兆龙       |修订成绩：79         |时间：2                  |
+________________________________________________________________________________________________________
+题目与代码：
+p1089
+#include<iostream>
+using namespace std;
+int money,cost,mama,flag=1,monthofdeath;
+int main ()
+{
+    for(int i=1;i<=12;i++) {
+        money+=300;  
+        cin>>cost;     
+        money-=cost;    
+           if(money<0) {     
+              flag=0;       
+              monthofdeath=i;    
+              break;            
+           }
+        mama+=money/100;     
+        money%=100;                  
+    }    
+    if(flag==1) {
+        money+=mama*120;    
+        cout<<money;
+    }            
+    else
+        cout<<-monthofdeath;
+    return 0;
+}
+
+p1149
+#include<stdio.h>
+int main()
+{
+        int a[2001]={6},b,c[10]={6,2,5,5,4,5,6,3,7,6},s=0,i,j;
+        scanf("%d",&b);
+        for(i=1;i<=2000;i++)
+        {
+                j=i;
+                while(j>=1)
+                {
+                        a[i]=a[i]+c[j%10];
+                        j=j/10;
+                }
+        }
+        for(i=0;i<=1000;i++)
+        {
+                for(j=0;j<=1000;j++)
+                if(a[i]+a[j]+a[i+j]+4==b)s++;
+        }
+        printf("%d",s);
+        return 0;
+}
+
+p1181
+#include <cstdio>
+
+int main()
+{
+    int a, b, n, m, count = 0;
+    scanf("%d%d", &n, &m);
+    if (n == 0) printf("%d", 0);
+    else {
+        scanf("%d", &a);
+        for (int i = 1; i < n; i++) {
+            scanf("%d", &b);
+            if (a + b > m) {
+                count++;
+                a = b;
+            }
+            else
+                a += b;
+        }
+        printf("%d", count + 1);
+    }
+    return 0;
+}
+
+p1200
+#include <cstdio>
+
+int main()
+{
+    int n, m, star = 1, team = 1;
+    while ((n = getchar()) != '\n')
+        star *= (n - 64);
+    while ((n = getchar()) != '\n')
+        team *= (n - 64);
+    if (star % 47 == team % 47)
+        printf("GO");
+    else printf("STAY");
+    return 0;
+}
+
+p1308
+#include <cstring>
+#include <cctype>
+#include <cstdio>
+
+void strlower (char *a) {
+    for(int i = 0; a[i]; i ++ ) {
+        if(isupper(a[i])) a[i] = tolower(a[i]);
+    }
+}
+
+int main () {
+
+    char destination[1000001], *q, source[11], *p;
+    bool flag = false;
+    int ans = 0, ans1 = -1;
+
+    gets(source);
+    gets(destination);
+
+    strlower(destination);
+    strlower(source);
+
+    int len = strlen(source);
+
+    p = destination;
+
+    for(; q = strstr(p, source); ) {
+        if( q != NULL
+        && ( q == destination || *(q - 1) == ' ') 
+        && ( *(q + len) == '\0' || *(q + len) == ' ' ) ) {
+            ans ++ ;
+            if(flag == false) {
+                flag = true;
+                ans1 = q - destination;
+            }
+        }
+        p = q + len;
+    }
+
+    if(flag == true)
+        printf("%d %d" , ans, ans1);
+    else 
+        printf("%d", ans1);
+
+    return 0;
+}
