@@ -1,0 +1,100 @@
+________________________________________________________________________________________________________
+练习人：漆兆龙       |成绩：80               |批改人：漆兆龙       |修订成绩：79         |时间：2                  |
+________________________________________________________________________________________________________
+题目与代码：
+p1421
+#include <cstdio>
+using namespace std;
+
+int main()
+{
+    int a, b;
+    scanf("%d%d", &a, &b);
+    int sum = a*10 + b;
+    printf("%d", sum/19);
+    return 0;
+}
+
+p1422
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<string>
+#include<cmath>
+using namespace std;
+int main()
+{
+    double s;//双精度浮点数
+    int n;
+    cin>>n;
+    if (n>400)
+    s=150*0.4463+250*0.4663+(n-400)*0.5663;
+    else
+    if (n>150)
+    s=150*0.4463+(n-150)*0.4663;
+    else
+    s=n*0.4463;
+//s为未四舍五入的电费
+    cout<<floor(s*10+0.5)/10.0;//返回s四舍五入小数点后第二位的结果。
+    return 0;
+}
+
+p1423
+#include <cstdio>
+using namespace std;
+
+int main()
+{
+    double x;
+    scanf("%lf", &x);
+    if (x == 0) printf("%d", 0);
+    else if (x <= 2) printf("%d", 1);
+    else {
+        double sum = 2, k = 2;
+        int n = 1;
+        while (sum < x) {
+            k *= 0.98;
+            sum += k;
+            n++;
+        }
+        printf("%d", n);
+    }
+    return 0;
+}
+
+p1424
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    unsigned long long n, ans = 0; 
+    int x;
+    cin >> x >> n; 
+    for(int i = 0; i < n; i++) {
+        if(x != 6 && x != 7) 
+            ans += 250; 
+        if(x == 7) 
+        x = 1; 
+        else
+            x++; 
+    }
+    cout << ans; 
+    return 0;
+}
+
+p1425
+
+#include <cstdio>
+using namespace std;
+
+int main()
+{
+    int a, b, c, d, e, f;
+    scanf("%d%d%d%d", &a, &b, &c, &d);
+    int sum = c * 60 + d - a * 60 - b;
+    e = sum / 60;
+    f = sum % 60;
+    printf("%d %d", e, f);
+    return 0;
+}
