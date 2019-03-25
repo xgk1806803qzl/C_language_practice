@@ -1,0 +1,158 @@
+________________________________________________________________________________________________________
+练习人：漆兆龙       |成绩：90               |批改人：漆兆龙       |修订成绩：89         |时间：2                  |
+________________________________________________________________________________________________________
+题目与代码：
+p1618
+#include <cstdio>
+
+int Mini(int a, int b) {
+    return (a > b)?b:a;
+}
+
+int main()
+{
+    int a, b, c, sub = 0, j, k, t[9];
+    scanf("%d%d%d", &a, &b, &c);
+    for(int i= (123 / a + Mini(123 % a, 1)) * a; i <= 987 / a * a; i += a) {
+        j = i / a * b, k = i / a * c;
+        if(j >= 100 && j <= 999 && k >= 100 && k<=999) {
+            int l[10], sum = 0, temp = 1;
+            t[1]=i/100, t[2]=i/10%10, t[3]=i%10;
+            t[4]=j/100, t[5]=j/10%10, t[6]=j%10;
+            t[7]=k/100, t[8]=k/10%10, t[9]=k%10;
+            for(int g = 1; g <= 9; g++) {
+                sum += t[g];
+                temp *= t[g];
+            }
+            if(sum == 45 && temp == 362880) {
+                sub = 1;
+                printf("%d %d %d\n", i, j, k);
+            }
+        }
+    }
+    if(sub == 0)
+        printf("No!!!");
+    return 0;
+}
+
+p1909
+#include<cmath>
+#include<cstdio>
+#include<algorithm>
+using namespace std;
+int n,a,b,c,ans=2100000000,x,i;
+int main()
+{
+    scanf("%d",&n);
+    for (;i<3;i++) {
+        scanf("%d%d",&a,&b);
+        x=ceil(n*1.0/a)*b;
+        ans=min(x,ans);
+    }
+    printf("%d\n",ans);
+    return 0;
+}
+
+p1980
+#include <cstdio>
+using namespace std;
+
+int main() {
+    int x, n, t = 0, b, c;
+    scanf("%d%d", &n, &x);
+    for (int i = 1; i <= n; i++) {
+        b = i;
+        while (b) {
+            c = b % 10;
+            b /= 10;
+            if (x == c) t++;
+        }
+    }
+    printf("%d", t);
+    return 0;
+}
+
+p2141
+#include <cstdio>
+
+int main()
+{
+    int n, a[101], b[101][101] = {0}, count = 0, sub;
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++)
+        scanf("%d", &a[i]);
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            b[i][j] = a[i] + a[j];
+    for (int i = 1; i <= n; i++) {
+        sub = 0;
+        for (int j = 1; j <= n; j++) {
+            for (int k = 1; k <= n; k++)
+                if (b[j][k] == a[i] && j != k)
+                    {count++; sub = 1; break;}
+                if (sub == 1) break;
+        }
+    }
+    printf("%d", count);
+    return 0;
+}
+
+uva101
+#include<cstdio>
+#include<string>
+#include<vector>
+#include<iostream>
+
+using namespace std;
+
+const int maxn = 30;
+int n;
+vector<int> pile[maxn];
+
+void find_block (int a, int &p, int &h) {
+    for (p = 0; p < n; p++)
+        for (h = 0; h < pile[p].size(); h++)
+            if (pile[p][h] == a) return;
+}
+
+void clear_above(int p, int h) {
+    for (int i = h + 1; i < pile[p].size(); i++) {
+        int b = pile[p][i];
+        pile[b].push_back(b);
+    }
+    pile[p].resize(h + 1);
+}
+
+void pile_onto(int p, int h, int p2) {
+    for (int i = h; i < pile[p].size(); i++)
+        pile[p2].push_back(pile[p][i]);
+    pile[p].resize(h);
+}
+
+void print() {
+    for (int i = 0; i < n; i++) {
+        printf("%d:", i);
+        for (int j = 0; j < pile[i].size(); j++)
+            printf(" %d", pile[i][j]);
+        printf("\n");
+    }
+}
+
+int main(){
+    int a, b;
+    cin >> n;
+    string s1, s2;
+    for (int i = 0; i < n; i++)
+        pile[i].push_back(i);
+    while (cin >> s1 >> a >> s2 >> b) {
+        int pa, pb, ha, hb;
+        find_block(a, pa, ha);
+        find_block(b, pb, hb);
+        if (pa == pb) continue;
+        if (s2 == "onto") clear_above(pb, hb);
+        if (s1 == "move") clear_above(pa, ha);
+        pile_onto(pa, ha, pb);
+    }
+    print();
+    return 0;
+}
