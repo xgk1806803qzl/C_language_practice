@@ -1,0 +1,241 @@
+________________________________________________________________________________________________________
+练习人：漆兆龙       |成绩：90               |批改人：漆兆龙       |修订成绩：88         |时间：2                  |
+________________________________________________________________________________________________________
+题目与代码：
+uva443
+#include<cstdio>
+using namespace std;  
+
+long long FindMin (long long n, long long m, long long t, long long k);
+long long CosMin (long long n, long long m);
+
+int f[10000];
+int main()
+{
+    int n, a, b, c, d, i;
+    f[1] = a = b = c = d = 1;
+    for(i = 2; i <= 5842; ++i)
+    {
+        f[i] = FindMin(f[a]*2, f[b]*3, f[c]*5, f[d]*7);
+        if(f[i] == f[a]*2)
+            ++a;
+        if(f[i] == f[b]*3)
+            ++b;
+        if(f[i] == f[c]*5)
+            ++c;
+        if(f[i] == f[d]*7)
+            ++d;
+    }
+    while(scanf("%d",&n) != EOF && n)
+    {
+        if(n % 10 == 1 && n % 100 != 11)
+            printf("The %dst humble number is %d.\n", n, f[n]);
+        else if(n % 10 == 2 && n % 100 != 12)
+            printf("The %dnd humble number is %d.\n", n, f[n]);
+        else if(n % 10 == 3 && n % 100 != 13)
+            printf("The %drd humble number is %d.\n", n, f[n]);
+        else 
+            printf("The %dth humble number is %d.\n", n, f[n]);
+    }
+    return 0;
+}
+
+long long FindMin (long long n, long long m, long long t, long long k) {
+    long long c = CosMin(n, m), d = CosMin(t, k);
+    return (c > d) ? d : c;
+}
+
+long long CosMin (long long n, long long m) {
+    return (n > m) ? m : n;
+}
+
+uva1585
+#include <cstdio>
+
+int main()
+{
+    int n;
+    scanf("%d\n", &n);
+    while (n--) {
+        int sum = 0, ins = 0, m;
+        while ((m = getchar()) != '\n') {
+            if (m == 'O')
+                ins++;
+            else
+                ins = 0;
+            sum += ins;
+        }
+        printf("%d\n", sum);
+    }
+    return 0;
+}
+
+uva1586
+
+#include <stdio.h>
+#include <iostream>
+#include <cstring>
+using namespace std;
+int main(int argc, char * argv[]) 
+{
+    double weight;
+    int count;
+    double ans;
+    bool flag;
+    char formula[85];
+    int n;
+    scanf("%d\n",&n);
+    for (int i = 0; i < n; ++i)
+    {  
+        ans = 0.0;
+        count = 0;
+        flag = false;
+        scanf("%s",formula);
+        for (int i = 0; i < strlen(formula); ++i)
+        {
+            switch (formula[i])
+            {
+                case 'C':
+                    ans += (weight * count);
+                    weight = 12.01;
+                    count = 1, flag = false;
+                    break;
+                case 'H':
+                    ans += (weight * count);
+                    weight = 1.008;
+                    count = 1, flag = false;
+                    break;
+                case 'O':
+                    ans += (weight * count);
+                    weight = 16.00;
+                    count = 1, flag = false;
+                    break;
+                case 'N':
+                    ans += (weight * count);
+                    weight = 14.01;
+                    count = 1, flag = false;
+                    break;
+                default:
+                    if(!flag) count = formula[i] - '0';
+                    else count = count * 10 + (formula[i] - '0');
+                    flag = true;
+            }           
+        }
+        ans += (weight * count);
+        printf("%.3f\n",ans);
+    }
+    return 0;
+}
+
+uva1592
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <string>
+#include <iostream>
+#include <map>
+
+using namespace std;
+typedef long long ll;
+int n, m, id, v[10010][11];
+char ch;
+bool tf;
+string str;
+map<string, int>mp;
+map<ll, int>q;
+int main() {
+    while(cin >> n >> m) {
+        mp.clear(); id = 0; getchar();
+        for (int i = 1; i <= n; i++)
+            for(int j = 1; j <= m; j++) {
+            str.clear();
+            while (1) {
+                ch = getchar();
+                if (ch == ',' || ch == '\n' || ch == '\r' || ch == EOF)break;
+                str.push_back(ch);
+            }
+            if (mp.count(str))
+                v[i][j] = mp[str];
+            else 
+                v[i][j] = mp[str] = ++id;
+        }
+        id++; tf = false;
+        for(int i = 1; i <= m; i++)
+            for(int j = 1; j < i; j++) {
+            q.clear();
+            for(int k = 1; k <= n && !tf; k++)
+                if(q.count((ll)v[k][i] * id + v[k][j])) {
+                printf("NO\n");
+                printf("%d %d\n%d %d\n", q[(ll)v[k][i]*id+v[k][j]], k, j, i);
+                tf = true;
+            }
+            else 
+                q[(ll)v[k][i]*id+v[k][j]] = k;
+            if(tf)
+                break;
+        }
+        if(!tf)
+            printf("YES\n");
+    }
+    return 0;
+}
+
+uva101
+#include<cstdio>
+#include<string>
+#include<vector>
+#include<iostream>
+
+using namespace std;
+
+const int maxn = 30;
+int n;
+vector<int> pile[maxn];
+
+void find_block (int a, int &p, int &h) {
+    for (p = 0; p < n; p++)
+        for (h = 0; h < pile[p].size(); h++)
+            if (pile[p][h] == a) return;
+}
+
+void clear_above(int p, int h) {
+    for (int i = h + 1; i < pile[p].size(); i++) {
+        int b = pile[p][i];
+        pile[b].push_back(b);
+    }
+    pile[p].resize(h + 1);
+}
+
+void pile_onto(int p, int h, int p2) {
+    for (int i = h; i < pile[p].size(); i++)
+        pile[p2].push_back(pile[p][i]);
+    pile[p].resize(h);
+}
+
+void print() {
+    for (int i = 0; i < n; i++) {
+        printf("%d:", i);
+        for (int j = 0; j < pile[i].size(); j++)
+            printf(" %d", pile[i][j]);
+        printf("\n");
+    }
+}
+
+int main(){
+    int a, b;
+    cin >> n;
+    string s1, s2;
+    for (int i = 0; i < n; i++)
+        pile[i].push_back(i);
+    while (cin >> s1 >> a >> s2 >> b) {
+        int pa, pb, ha, hb;
+        find_block(a, pa, ha);
+        find_block(b, pb, hb);
+        if (pa == pb) continue;
+        if (s2 == "onto") clear_above(pb, hb);
+        if (s1 == "move") clear_above(pa, ha);
+        pile_onto(pa, ha, pb);
+    }
+    print();
+    return 0;
+}
